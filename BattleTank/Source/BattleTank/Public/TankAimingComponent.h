@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "CoreMinimal.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
