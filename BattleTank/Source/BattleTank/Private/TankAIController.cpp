@@ -15,15 +15,20 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("TankAIController has Tank: %s"), *(ControlledTank->GetName()));
 	}
+}
 
-	auto PlayerTank = GetPlayerTank();
-	if (!PlayerTank)
+void ATankAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (GetPlayerTank())
 	{
-		UE_LOG(LogTemp, Error, TEXT("TankAIController doesn't see a Player Tank"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController see a Player Tank: %s"), *(PlayerTank->GetName()));
+		// TODO Move towards the player
+		
+		// Aim at the player
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+		// Fire if ready
 	}
 }
 
