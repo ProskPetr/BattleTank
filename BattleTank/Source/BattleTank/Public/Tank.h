@@ -19,6 +19,9 @@ public:
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
 protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	UTankAimingComponent* AimingComponent = nullptr;
 
 private:
@@ -31,8 +34,7 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 10000.0; 
+
 };
