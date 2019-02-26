@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Tank.h"
+#include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
@@ -34,5 +35,10 @@ private:
 	bool GetSightRayHitLocation(FVector&) const;
 
 	bool GetLookDirection(FVector2D, FVector&) const;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.0;
+
+	bool GetLookVectorHitLocation(FVector, FVector&) const;
 
 };
