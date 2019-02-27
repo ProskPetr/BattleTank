@@ -2,9 +2,9 @@
 
 #include "TankBarrel.h"
 
-void UTankBarrel::Elevate(float MoveSpeed)
+void UTankBarrel::Elevate(float RelativeSpeed)
 {
 	// Move barrel the right amount current frame
 
-	UE_LOG(LogTemp, Warning, TEXT("Barrel-Elevate called at speed %f"), MoveSpeed);	
+	UE_LOG(LogTemp, Warning, TEXT("Barrel-Elevate called at speed %f"), RelativeSpeed);
 }

@@ -18,9 +18,9 @@ void ATankPlayerController::BeginPlay()
 	}
 }
 
-void ATankPlayerController::Tick(float DeltaTime)
+void ATankPlayerController::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(DeltaSeconds);
 
 	AimTowardsCrosshair();
 }
