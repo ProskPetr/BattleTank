@@ -2,27 +2,28 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
 
-
-// Holds Elevate method and Barrel properties
-UCLASS(Blueprintable, meta = (BlueprintSpawnableComponent), hidecategories = ("Collision"))
+/**
+ * 
+ */
+UCLASS(meta = (BlueprintSpawnableComponent), hidecategories = ("Collision"))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
 public:
+	// -1 is max downward speed, and +1 is max up movement
 	void Elevate(float RelativeSpeed);
 
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxDegreesPerSecond = 20.0;
+	float MaxDegreesPerSecond = 20;
+	
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MaxElevationDegrees = 40;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float MinElevationDegree = 0.0;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
-	float MaxElevationDegree = 30.0;
+	float MinElevationDegrees = 0;
 };
