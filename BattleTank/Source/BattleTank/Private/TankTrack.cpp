@@ -7,6 +7,11 @@
 void UTankTrack::Move(float Speed)
 {
 	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: Tank moves with speed %f"), Time, Speed);
+	UE_LOG(LogTemp, Warning, TEXT("%f: %s speed %f"), Time, *(this->GetName()), Speed);
+
+	auto ForceApplied = GetForwardVector() * Speed * MaxDrivingForce;
+	auto ForceLocation = GetComponentLocation();
+	auto Tank = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	Tank->AddForceAtLocation(ForceApplied, ForceLocation);
 }
 
