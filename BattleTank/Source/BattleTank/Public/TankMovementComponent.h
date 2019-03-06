@@ -27,6 +27,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxDrivingForce = 40000000.0; // per Track, in Newtons
+
+	// TODO check right protection
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 private:
 	UTankTrack* LeftTrack = nullptr;
