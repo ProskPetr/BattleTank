@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void MoveForward(float Speed);
 
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void TurnRight(float Speed);
+
 	UPROPERTY(EditDefaultsOnly)
 	float MaxDrivingForce = 40000000.0; // per Track, in Newtons
 	
