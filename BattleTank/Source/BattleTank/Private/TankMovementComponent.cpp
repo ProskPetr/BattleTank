@@ -16,8 +16,8 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto ForwardVector = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
 
-
 	MoveForward(FVector::DotProduct(AIForwardIntention, ForwardVector));
+	TurnRight((FVector::CrossProduct(ForwardVector, AIForwardIntention)).Z);
 }
 
 void UTankMovementComponent::MoveForward(float Speed)
