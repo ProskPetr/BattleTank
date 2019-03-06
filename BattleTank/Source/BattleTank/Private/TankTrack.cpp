@@ -4,7 +4,7 @@
 #include "TankTrack.h"
 
 
-void UTankTrack::Move(float Speed)
+void UTankTrack::SetThrottle(float Speed)
 {
 	auto ForceApplied = GetForwardVector() * Speed * MaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
