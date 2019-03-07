@@ -10,7 +10,7 @@ class UTankTrack;
 /**
 Used for player and AI tanks movement
 **/
-UCLASS(meta = (BlueprintSpawnableComponent))
+UCLASS(meta = (BlueprintSpawnableComponent), ClassGroup = (Custom))
 class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 {
 	GENERATED_BODY()

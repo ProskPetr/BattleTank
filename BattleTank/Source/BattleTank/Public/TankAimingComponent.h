@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, ProskPetr, All rights reserved.
 
 #pragma once
 
@@ -10,29 +10,24 @@ class UTankBarrel;
 class UTankTurret;
 
 // Holds barrel's properties and Elevate method
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(meta=(BlueprintSpawnableComponent), ClassGroup = (Custom))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
-	UTankAimingComponent();
-
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	void SetTurretReference(UTankTurret* TurretToSet);
-	
-	// TODO add SetTurretReference
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialize(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet);
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
-	UTankBarrel* Barrel = nullptr;
+	// Sets default values for this component's properties
+	UTankAimingComponent();
+
 	UTankTurret* Turret = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
-
-	void MoveTurret(FVector AimDirection);
 
 };
