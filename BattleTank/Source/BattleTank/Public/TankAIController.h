@@ -25,6 +25,4 @@ private:
 	// How close can AI tank get to the player
 	float AcceptanceRadius = 3000.0;
 
-	APawn* ControlledTank = nullptr;
-
 };
