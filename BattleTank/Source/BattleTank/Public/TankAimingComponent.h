@@ -46,13 +46,17 @@ private:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	bool IsBarrelMoving();
+
 	UTankTurret* Turret = nullptr;
 	UTankBarrel* Barrel = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 
-	void MoveBarrelTowards(FVector AimDirection);
+	FVector AimDirection;
+
+	void MoveBarrelTowards();
 
 	double LastTimeFired = 0;
 
