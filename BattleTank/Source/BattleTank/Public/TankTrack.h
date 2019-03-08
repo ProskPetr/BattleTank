@@ -19,4 +19,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	float MaxDrivingForce = 400000.0; // per Track, in Newtons
+
+private:
+	UTankTrack();
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 };
