@@ -6,7 +6,7 @@
 
 UTankTrack::UTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankTrack::BeginPlay()
@@ -14,9 +14,11 @@ void UTankTrack::BeginPlay()
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTankTrack::ApplyCorrectionForce()
 {
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
+
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
 	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
 
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
@@ -27,12 +29,19 @@ void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActor
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Track On Hit"));
+	DriveTrack();
+	ApplyCorrectionForce();
+	CurrentRelativeVelocity = 0.0;
 }
 
 void UTankTrack::SetThrottle(float RelativeVelocity)
 {
-	auto ForceApplied = GetForwardVector() * RelativeVelocity * MaxDrivingForce;
+	CurrentRelativeVelocity = FMath::Clamp<float>(CurrentRelativeVelocity + RelativeVelocity, -1.0, 1.0);
+}
+
+void UTankTrack::DriveTrack()
+{
+	auto ForceApplied = GetForwardVector() * CurrentRelativeVelocity * MaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto Tank = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	Tank->AddForceAtLocation(ForceApplied, ForceLocation);
