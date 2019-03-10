@@ -14,6 +14,7 @@ class AProjectile;
 UENUM()
 enum class EFiringState : uint8
 {
+	OutOfAmmo,
 	Reloading,
 	Aiming,
 	Locked
@@ -39,6 +40,9 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Firing")
+	int32 Ammo = 0;
 
 private:
 	// Sets default values for this component's properties
@@ -66,6 +70,11 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTime = 3; // In seconds		
+	float ReloadTime = 3; // In seconds
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 MaxAmmo = 10;	
+
+	bool IsOutOfAmmo();
 
 };

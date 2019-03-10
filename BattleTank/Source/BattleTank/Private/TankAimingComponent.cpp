@@ -19,17 +19,22 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	LastTimeFired = FPlatformTime::Seconds(); // To make first shot after reload
+	Ammo = MaxAmmo;
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastTimeFired) < ReloadTime)
+	if (((FPlatformTime::Seconds() - LastTimeFired) < ReloadTime) && !IsOutOfAmmo())
 	{
 		FiringState = EFiringState::Reloading;
 	}
-	else if (IsBarrelMoving())
+	else if (IsBarrelMoving() && !IsOutOfAmmo())
 	{
 		FiringState = EFiringState::Aiming;
+	}
+	else if (IsOutOfAmmo())
+	{
+		FiringState = EFiringState::OutOfAmmo;
 	}
 	else
 	{
@@ -46,6 +51,11 @@ void UTankAimingComponent::Initialize(UTankTurret* TurretToSet, UTankBarrel* Bar
 EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
+}
+
+bool UTankAimingComponent::IsOutOfAmmo()
+{
+	return Ammo == 0;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -105,7 +115,9 @@ void UTankAimingComponent::MoveBarrelTowards()
 
 void UTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringState::Reloading)
+	bool bReadyToFire = (FiringState != EFiringState::Reloading) && !IsOutOfAmmo();
+
+	if (bReadyToFire)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
@@ -119,5 +131,6 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 
 		LastTimeFired = FPlatformTime::Seconds();
+		Ammo--;
 	}
 }
