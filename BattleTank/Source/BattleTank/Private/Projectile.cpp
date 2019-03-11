@@ -37,6 +37,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
+	CollisionMesh->DestroyComponent(true);
 }
 
 void AProjectile::LaunchProjectile(float Speed)
