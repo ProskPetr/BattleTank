@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankAIController.h"
 // Depends on TankMovementComponent via pathfinding system
 
@@ -10,6 +11,12 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	Cast<ATank>(GetPawn())->OnHealthEnd.AddUniqueDynamic(this, &ATankAIController::OnTankDeath);
+}
+
+void ATankAIController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AI Tank is destroyed!"));
 }
 
 // Called every frame

@@ -20,6 +20,9 @@ protected:
 private:
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void OnTankDeath();
+
 	virtual void Tick(float DeltaSeconds) override;
 
 	// How close can AI tank get to the player
