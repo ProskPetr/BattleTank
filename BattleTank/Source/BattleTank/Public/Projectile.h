@@ -23,14 +23,22 @@ private:
 
 	void DestroyActor();
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float DestroyDelay = 5.0;	
+	float DamageRadius = 500.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 5.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage = 25.0;
 
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UStaticMeshComponent* CollisionMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UParticleSystemComponent* LaunchBlast = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	UParticleSystemComponent* LaunchSmoke = nullptr;
 	
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	UParticleSystemComponent* ImpactBlast = nullptr;

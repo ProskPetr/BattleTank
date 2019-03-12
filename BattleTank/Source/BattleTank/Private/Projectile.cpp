@@ -18,6 +18,9 @@ AProjectile::AProjectile()
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
+	LaunchSmoke = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Smoke"));
+	LaunchSmoke->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->bAutoActivate = false;
@@ -38,7 +41,18 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 
-	CollisionMesh->DestroyComponent(true);
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+	LaunchBlast->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		DamageRadius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>()
+	);
 
 	FTimerHandle InOutDelay;
 	GetWorld()->GetTimerManager().SetTimer(InOutDelay, this, &AProjectile::DestroyActor, DestroyDelay);
