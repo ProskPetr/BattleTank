@@ -14,9 +14,15 @@ class BATTLETANK_API ATank : public APawn
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent() const;
+
 private:
 	ATank();
 
-	UPROPERTY(EditAnywhere, Category = "Setup")
-	int32 Health = 100.0;
+	UPROPERTY(EditDefaultsOnly, Category = "Health")
+	int32 MaxHealth = 100.0;
+
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	int32 Health = MaxHealth;
 };

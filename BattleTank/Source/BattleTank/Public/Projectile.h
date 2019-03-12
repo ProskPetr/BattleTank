@@ -23,7 +23,7 @@ private:
 
 	void DestroyActor();
 
-	float DamageRadius = 500.0;
+	float DamageRadius = 100.0;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DestroyDelay = 5.0;
