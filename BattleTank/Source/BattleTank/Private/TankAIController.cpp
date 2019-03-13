@@ -16,7 +16,8 @@ void ATankAIController::BeginPlay()
 
 void ATankAIController::OnTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AI Tank is destroyed!"));
+	if (!GetPawn()) { return; }
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 // Called every frame

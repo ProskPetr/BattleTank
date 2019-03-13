@@ -2,8 +2,14 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankPlayerController.h"
 
+
+ATankPlayerController::ATankPlayerController()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
 
 void ATankPlayerController::BeginPlay()
 {
@@ -14,13 +20,24 @@ void ATankPlayerController::BeginPlay()
 
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
+
+	Cast<ATank>(GetPawn())->OnHealthEnd.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+}
+
+void ATankPlayerController::OnTankDeath()
+{
+	StartSpectatingOnly();
+	bIsDestroyed = true;
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick( DeltaTime );
 
-	AimTowardsCrosshair();
+	if (!bIsDestroyed)
+	{
+		AimTowardsCrosshair();
+	}
 }
 
 void ATankPlayerController::AimTowardsCrosshair()

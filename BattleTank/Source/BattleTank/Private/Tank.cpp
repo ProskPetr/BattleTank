@@ -10,6 +10,13 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Health = MaxHealth;
+}
+
 float ATank::GetHealthPercent() const
 {
 	return (float)Health / (float)MaxHealth;
